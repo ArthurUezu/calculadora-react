@@ -1,7 +1,7 @@
 import React from 'react'
-import { Dimensions, StyleSheet, Text, TouchableHighlight } from 'react-native'
+import { Dimensions, StyleSheet, Text, TouchableHighlight, View } from 'react-native'
 
-export const Botao = ({content, action, color}) => {
+export const Botao = ({content, action, color, label}) => {
     let styleButton = [style.botao];
     if(color != null || color != undefined) 
         styleButton.push({backgroundColor:color});
@@ -9,19 +9,27 @@ export const Botao = ({content, action, color}) => {
         action(content);
     }
   return (
-    <TouchableHighlight onPress={executeAction}>
-        <Text style={styleButton}>{content}</Text>
-    </TouchableHighlight>
+    <View style={style.container}>
+      <TouchableHighlight onPress={executeAction}>
+          <Text style={styleButton}>{label}</Text>
+      </TouchableHighlight>
+    </View>
   )
 }
 const style = StyleSheet.create({
+  container:{
+    margin: 10,
+    width: (Dimensions.get('window').height/8)- 20,
+    height: (Dimensions.get('window').height/8)- 20,
+  },
   botao:{
-    width: Dimensions.get('window').width/4,
-    height: Dimensions.get('window').width/4,
     justifyContent: "center",
     alignItems: "center",
     marginTop: "auto",
     textAlign: 'center',
-    lineHeight: Dimensions.get('window').width/4
+    backgroundColor: "grey",
+    borderRadius: 25,
+    lineHeight: Dimensions.get('window').height/8-20,
+    fontSize:30
   }
 })
