@@ -2,7 +2,7 @@ import React from 'react'
 import { Dimensions, StyleSheet, View } from 'react-native'
 import { Botao } from './Botao'
 
-export const Pad = ({setValue, value}) => {
+export const Pad = ({setValue, value, setResult, result}) => {
     function deleteNumber(){
         if(value.length > 0){
             setValue(value.substring(0, value.length - 1));
@@ -10,19 +10,35 @@ export const Pad = ({setValue, value}) => {
     }
     function deleteAllNumber(){
         setValue('0');
+        setResult('0')
     }
     function addNumber(number){
-        setValue(value + number);
+        if(value == '0'){
+            setValue(number);
+        }
+        else{
+            setValue(value+number)
+        }
     }
     function addOperator(operator){
         if(value[value.length-1] == '-' || value[value.length-1] == '+' || value[value.length-1] == '*' || value[value.length-1] == '/'){
             return;
         }
-        setValue(value + operator);
+        if(result == '0'){
+            setResult(value+operator);
+            setValue('0');
+        }
+        else{
+            addResult();
+            setResult(result+operator);
+        }
     }
     function addResult(){
-        let result = eval(value);
-        setValue(result);
+        if(result[result.length-1] == '-' || result[result.length-1] == '+' || result[result.length-1] == '*' || result[result.length-1] == '/'){
+            const newResult = eval(result+value);
+            setValue('0');
+            setResult(newResult);
+        }
     }
     return (
       <View style={style.container}>

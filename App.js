@@ -6,10 +6,11 @@ import { Pad } from './components/Pad';
 
 export default function App() {
   const [value, setValue] = useState('0');
+  const [result, setResult] = useState('0')
   return (
     <View style={styles.container}>
-      <Display value={value}></Display>
-      <Pad setValue={setValue} value={value}></Pad>
+      <Display value={value} result={result}></Display>
+      <Pad setValue={setValue} value={value} setResult={setResult} result={result}></Pad>
       <StatusBar style="auto" />
     </View>
   );
