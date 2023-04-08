@@ -3,6 +3,10 @@ import { Dimensions, StyleSheet, View } from 'react-native'
 import { Botao } from './Botao'
 
 export const Pad = ({setValue, value, setResult, result}) => {
+    const grey = '#4E505F';
+    const black = '#2E2F38';
+    const blue = '#4B5EFC';
+
     function deleteNumber(){
         if(value.length > 0){
             setValue(value.substring(0, value.length - 1));
@@ -15,9 +19,22 @@ export const Pad = ({setValue, value, setResult, result}) => {
     function addNumber(number){
         if(value == '0'){
             setValue(number);
+            return;
+        }
+        if(!value.includes('.')){
+            setValue(value+number)
+        }
+        else if(number != '.'){
+            setValue(value+number)
+        }
+        
+    }
+    function makeNegative(){
+        if(value[0] != '-'){
+            setValue('-'+value);
         }
         else{
-            setValue(value+number)
+            setValue(value.substring(1,value.length))
         }
     }
     function addOperator(operator){
@@ -47,7 +64,8 @@ export const Pad = ({setValue, value, setResult, result}) => {
     }
     function addResult(){
         if(result[result.length-1] == '-' || result[result.length-1] == '+' || result[result.length-1] == '*' || result[result.length-1] == '/'){
-            const newResult = eval(result+value);
+            
+            const newResult = eval(result.replace('%','/100')+value);
             setValue(newResult);
             setResult(result+value);
             return newResult;
@@ -55,26 +73,26 @@ export const Pad = ({setValue, value, setResult, result}) => {
     }
     return (
       <View style={style.container}>
-          <Botao color={'red'} label={'C'} content={'C'} action={deleteAllNumber}></Botao>
-          <Botao color={'white'} label={'+/-'} content={'+/-'} action={addNumber}></Botao>
-          <Botao color={'white'} label={'%'} content={'%'} action={addNumber}></Botao>
-          <Botao color={'blue'} label={'/'} content={'/'} action={addOperator}></Botao>
-          <Botao color={'white'} label={'7'} content={'7'} action={addNumber}></Botao>
-          <Botao color={'white'} label={'8'} content={'8'} action={addNumber}></Botao>
-          <Botao color={'white'} label={'9'} content={'9'} action={addNumber}></Botao>
-          <Botao color={'blue'} label={'X'} content={'*'} action={addOperator}></Botao>
-          <Botao color={'white'} label={'4'} content={'4'} action={addNumber}></Botao>
-          <Botao color={'white'} label={'5'} content={'5'} action={addNumber}></Botao>
-          <Botao color={'white'} label={'6'} content={'6'} action={addNumber}></Botao>
-          <Botao color={'blue'} label={'-'} content={'-'} action={addOperator}></Botao>
-          <Botao color={'white'} label={'1'} content={'1'} action={addNumber}></Botao>
-          <Botao color={'white'} label={'2'} content={'2'} action={addNumber}></Botao>
-          <Botao color={'white'} label={'3'} content={'3'} action={addNumber}></Botao>
-          <Botao color={'blue'} label={'+'} content={'+'} action={addOperator}></Botao>
-          <Botao color={'white'} label={'.'} content={'.'} action={addNumber}></Botao>
-          <Botao color={'white'} label={'0'} content={'0'} action={addNumber}></Botao>
-          <Botao color={'red'} label={'<'} content={'<'} action={deleteNumber}></Botao>
-          <Botao color={'red'} label={'='} content={'='} action={addResult}></Botao>
+          <Botao color={'#4E505F'} label={'C'} content={'C'} action={deleteAllNumber}></Botao>
+          <Botao color={grey} label={'+/-'} content={'+/-'} action={makeNegative}></Botao>
+          <Botao color={grey} label={'%'} content={'%'} action={addOperator}></Botao>
+          <Botao color={blue} label={'/'} content={'/'} action={addOperator}></Botao>
+          <Botao color={black} label={'7'} content={'7'} action={addNumber}></Botao>
+          <Botao color={black} label={'8'} content={'8'} action={addNumber}></Botao>
+          <Botao color={black} label={'9'} content={'9'} action={addNumber}></Botao>
+          <Botao color={blue} label={'X'} content={'*'} action={addOperator}></Botao>
+          <Botao color={black} label={'4'} content={'4'} action={addNumber}></Botao>
+          <Botao color={black} label={'5'} content={'5'} action={addNumber}></Botao>
+          <Botao color={black} label={'6'} content={'6'} action={addNumber}></Botao>
+          <Botao color={blue} label={'-'} content={'-'} action={addOperator}></Botao>
+          <Botao color={black} label={'1'} content={'1'} action={addNumber}></Botao>
+          <Botao color={black} label={'2'} content={'2'} action={addNumber}></Botao>
+          <Botao color={black} label={'3'} content={'3'} action={addNumber}></Botao>
+          <Botao color={blue} label={'+'} content={'+'} action={addOperator}></Botao>
+          <Botao color={black} label={'.'} content={'.'} action={addNumber}></Botao>
+          <Botao color={black} label={'0'} content={'0'} action={addNumber}></Botao>
+          <Botao color={black} label={'<'} content={'<'} action={deleteNumber}></Botao>
+          <Botao color={blue} label={'='} content={'='} action={addResult}></Botao>
       </View>
     )
 }
